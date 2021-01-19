@@ -39,9 +39,16 @@ public class java_01_demo02 {
 
     }
 
+     static void StringDemo() {
+        String a="123456789";
+        System.out.println(a.charAt(1));
+        System.out.println(a.codePointAt(1));
+        int i =Integer.valueOf(a);
+    }
+
 
     public static void main(String[] args) {
-        spliceDemo();
+    StringDemo();
     }
 
 }
