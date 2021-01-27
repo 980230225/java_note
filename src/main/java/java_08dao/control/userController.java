@@ -1,5 +1,7 @@
 package java_08dao.control;
 
+import java_08dao.dao.userDao;
+
 import java.sql.ResultSet;
 
 /**
@@ -9,7 +11,7 @@ import java.sql.ResultSet;
  * @Modified By:
  */
 public class userController implements Controller {
-
+    userDao user=new userDao();
 
     public boolean insert(String sql) {
         return false;
