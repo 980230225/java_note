@@ -29,7 +29,5 @@ public class userController implements Controller {
         return null;
     }
 
-    public ResultSet findall() {
-        return null;
-    }
+
 }

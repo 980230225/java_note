@@ -11,10 +11,10 @@ import java.sql.ResultSet;
  * @Modified By:
  */
 public  interface dao  {
-    Connection conn =daoUtil.getConn();
+    Connection conn =null;
     boolean insert(String sql);
     boolean delete(String sql);
    boolean update(String sql);
     ResultSet find(String sql);
-    ResultSet findall();
+
 }

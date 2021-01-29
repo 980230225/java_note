@@ -6,27 +6,30 @@ import java.sql.*;
  * @Date:Create in
  * @Modified By:
  */
+
 public  class daoUtil {
-    static String url = "jdbc:postgresql://127.0.0.1:5432/test";
-
-    static String usr = "postgres";
-
-    static String psd = "1qaz!QAZ";
+    static String url = "jdbc:postgresql://127.0.0.1:5432/java_note";
+    static String user = "postgres";
+    static String password = "1qaz!QAZ";
      static Connection conn;
 
-    private daoUtil() {
-        conn = null;
+     public daoUtil() {
+         init();
+     }
 
+     Connection init() {
+        try { conn = null;
+            // 1.  创建驱动程序类对象，驱动程序类对象在创建过程中已经被注册到MangerDriver类中
+            Driver driver = new org.postgresql.Driver();
 
-        try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(url, usr, psd);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            // 2. 连接数据库，返回连接对象
+            Connection conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return conn;
     }
+
 
     public static Connection getConn() {
         return conn;
