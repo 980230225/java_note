@@ -2,7 +2,7 @@ package java_08dao;
 
 import java_08dao.dao.userDao;
 
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 
@@ -15,26 +15,30 @@ import java.sql.SQLException;
 @SuppressWarnings("ALL")
 public class start {
     public static void main(String[] args) throws SQLException {
-        userDao user=new userDao();
-        String sql;
-//        for (int i=10;i<100;i++) {
-
+//        userDao user=new userDao();
+//        String sql;
+//        for (int i=202;i<301;i++) {
+//
 //            sql="insert into test(uid,uname) values(" + i + ",'shida');";
 //            user.insert(sql);
-
+//
 //            System.out.println(sql);
 //            System.out.println("第"+i+"次执行成功");
 //        }
+//
+        userDao deletedao=new userDao();
+        for (int i=0;i<=300;i++){
+            String sql="delete from test where uid="+i+";";
+        deletedao.delete(sql);
+        }
 
-//        Date date_a=new Date();
-
-        sql="select * from test order by uid desc;";
-        ResultSet result=user.find(sql);
-           while (result.next()) {
-               int id = result.getInt(1);
-               String name = result.getString(2);
-               System.out.println(id + "\t\t" + name);
-           }
+//        sql="select * from test order by uid desc;";
+//        ResultSet result=user.find(sql);
+//           while (result.next()) {
+//               int id = result.getInt(1);
+//               String name = result.getString(2);
+//               System.out.println(id + "\t\t" + name);
+//           }
 
 
 //

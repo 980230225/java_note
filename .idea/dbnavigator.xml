@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -33,8 +33,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d6366b2e-e361-4d4a-bbba-54cef953891c">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main" />
-      <console name="java_note" type="STANDARD" schema="information_schema" session="Main"><![CDATA[show create  table test;]]></console>
+      <console name="java_note" type="STANDARD" schema="information_schema" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

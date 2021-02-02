@@ -4,13 +4,13 @@ import java.sql.*;
 
 /**
  * @Author:shida
- * @Description:
+ * @Description:daotest
  * @Date:Create in
  * @Modified By:
  */
 public class userDao implements dao{
     static String url = "jdbc:postgresql://127.0.0.1:5432/java_note";
-    static String user = "postgres";
+    static String user = "shida";
     static String password = "1qaz!QAZ";
     static Connection conn;
     static ResultSet result;
@@ -36,7 +36,7 @@ public class userDao implements dao{
     }
 
     public boolean delete(String sql) {
-        return false;
+        return excute(sql);
     }
 
     public boolean update(String sql) {

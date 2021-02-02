@@ -424,6 +424,9 @@ options：参数可选项，可以是以下值：
 
 #数据库账号权限相关
 #1、角色
+create user shida;
+GRANT  ALL ON  test to shida;
+alter USER shida PASSWORD '1qaz!QAZ';
 
 #2、权限
 #分配权限
@@ -451,11 +454,15 @@ object − 要授予访问权限的对象名称。可能的对象有： table，
 PUBLIC − 表示所有用户。
 GROUP group − 为用户组授予权限。
 username − 要授予权限的用户名。PUBLIC 是代表所有用户的简短形式。
+例子
+GRANT  ALL ON  test to shida;
+
 #移除权限
 REVOKE privilege [, ...]
 ON object [, ...]
 FROM { PUBLIC | GROUP groupname | username }
 
+revoke all on test from postgre;
 
 #表操作
 #建表
@@ -573,3 +580,333 @@ WHERE
 	AND NOT A.attisdropped
 ORDER BY
 	A.attnum;
+
+#增删改查
+#增加
+insert into tablename(column1,column2.....)values(value1,value2,value3.....)
+insert into tablename values(value1,value2,value3.....),(value1,value2,value3.....);
+#删除
+delete from tablename1，tablename2 where 条件;
+#修改
+update 表名 set column1=valuexxxxx
+update 语句要加where
+update 表名 set column1=valuexxxxx  where columnx=xxxx;
+#查询
+select 列名1，列名2..... from 表名1，表名2 where 条件;
+
+#运算符
+PostgreSQL 运算符
+运算符是一种告诉编译器执行特定的数学或逻辑操作的符号。
+PostgreSQL 运算符是一个保留关键字或字符，一般用在 WHERE 语句中，作为过滤条件。
+常见的运算符有：
+
+算术运算符
+
+比较运算符
+
+逻辑运算符
+
+按位运算符
+
+
+
+算术运算符
+假设变量 a 为 2，变量 b 为 3，则：
+运算符	描述	实例
++	加	a + b 结果为 5
+-	减	a - b 结果为 -1
+*	乘	a * b 结果为 6
+/	除	b / a 结果为 1
+%	模（取余）	b % a 结果为 1
+^	指数	a ^ b 结果为 8
+|/	平方根	|/ 25.0 结果为 5
+||/	立方根	||/ 27.0 结果为 3
+!	阶乘	5 ! 结果为 120
+!!	阶乘（前缀操作符）	!! 5 结果为 120
+实例
+runoobdb=# select 2+3;
+ ?column?
+----------
+5
+(1 row)
+
+
+runoobdb=# select 2*3;
+ ?column?
+----------
+6
+(1 row)
+
+
+runoobdb=# select 10/5;
+ ?column?
+----------
+2
+(1 row)
+
+
+runoobdb=# select 12%5;
+ ?column?
+----------
+2
+(1 row)
+
+
+runoobdb=# select 2^3;
+ ?column?
+----------
+8
+(1 row)
+
+
+runoobdb=# select |/ 25.0;
+ ?column?
+----------
+5
+(1 row)
+
+
+runoobdb=# select ||/ 27.0;
+ ?column?
+----------
+3
+(1 row)
+
+
+runoobdb=# select 5 !;
+ ?column?
+----------
+120
+(1 row)
+
+
+runoobdb=# select !!5;
+ ?column?
+----------
+120
+(1 row)
+
+
+比较运算符
+假设变量 a 为 10，变量 b 为 20，则：
+运算符	描述	实例
+=	等于	(a = b) 为 false。
+!=	不等于	(a != b) 为 true。
+<>	不等于	(a <> b) 为 true。
+>	大于	(a > b) 为 false。
+<	小于	(a < b) 为 true。
+>=	大于等于	(a >= b) 为 false。
+<=	小于等于	(a <= b) 为 true。
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+runoobdb=# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+读取 SALARY 字段大于 50000 的数据：
+runoobdb=# SELECT * FROM COMPANY WHERE SALARY > 50000;
+ id | name  | age |address    | salary
+----+-------+-----+-----------+--------
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+(2 rows)
+读取 SALARY 字段等于 20000 的数据：
+runoobdb=#  SELECT * FROM COMPANY WHERE SALARY = 20000;
+ id | name  | age |  address    | salary
+ ----+-------+-----+-------------+--------
+   1 | Paul  |  32 | California  |  20000
+   3 | Teddy |  23 | Norway      |  20000
+(2 rows)
+读取 SALARY 字段不等于 20000 的数据：
+runoobdb=#  SELECT * FROM COMPANY WHERE SALARY != 20000;
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  2 | Allen |  25 | Texas       |  15000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+(5 rows)
+
+runoobdb=# SELECT * FROM COMPANY WHERE SALARY <> 20000;
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+(5 rows)
+读取 SALARY 字段大于等于 65000 的数据：
+runoobdb=# SELECT * FROM COMPANY WHERE SALARY >= 65000;
+ id | name  | age |  address  | salary
+----+-------+-----+-----------+--------
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+(2 rows)
+
+
+逻辑运算符
+PostgreSQL 逻辑运算符有以下几种：
+序号	运算符 & 描述
+1	AND
+	逻辑与运算符。如果两个操作数都非零，则条件为真。
+	PostgresSQL 中的 WHERE 语句可以用 AND 包含多个过滤条件。
+
+2	NOT
+	逻辑非运算符。用来逆转操作数的逻辑状态。如果条件为真则逻辑非运算符将使其为假。
+	PostgresSQL 有 NOT EXISTS, NOT BETWEEN, NOT IN 等运算符。
+3	OR
+	逻辑或运算符。如果两个操作数中有任意一个非零，则条件为真。
+	PostgresSQL 中的 WHERE 语句可以用 OR 包含多个过滤条件。
+SQL 使用三值的逻辑系统，包括 true、false 和 null，null 表示"未知"。
+a	b	a AND b	a OR b
+TRUE	TRUE	TRUE	TRUE
+TRUE	FALSE	FALSE	TRUE
+TRUE	NULL	NULL	TRUE
+FALSE	FALSE	FALSE	FALSE
+FALSE	NULL	FALSE	NULL
+NULL	NULL	NULL	NULL
+a	NOT a
+TRUE	FALSE
+FALSE	TRUE
+NULL	NULL
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+runoobdb=# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+读取 AGE 字段大于等于 25 且 SALARY 字段大于等于 6500 的数据：
+runoobdb=# SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 6500;
+ id | name  | age |                      address                  | salary
+----+-------+-----+-----------------------------------------------+--------
+  1 | Paul  |  32 | California                                    |  20000
+  2 | Allen |  25 | Texas                                         |  15000
+  4 | Mark  |  25 | Rich-Mond                                     |  65000
+  5 | David |  27 | Texas                                         |  85000
+(4 rows)
+读取 AGE 字段大于等于 25 或 SALARY 字段大于 6500 的数据：
+runoobdb=# SELECT * FROM COMPANY WHERE AGE >= 25 OR SALARY >= 6500;
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  8 | Paul  |  24 | Houston     |  20000
+  9 | James |  44 | Norway      |   5000
+ 10 | James |  45 | Texas       |   5000
+(10 rows)
+读取 SALARY 字段不为 NULL 的数据：
+runoobdb=#  SELECT * FROM COMPANY WHERE SALARY IS NOT NULL;
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  8 | Paul  |  24 | Houston     |  20000
+  9 | James |  44 | Norway      |   5000
+ 10 | James |  45 | Texas       |   5000
+(10 rows)
+
+
+位运算符
+位运算符作用于位，并逐位执行操作。&、 | 和 ^ 的真值表如下所示：
+p	q	p & q	p | q
+0	0	0	0
+0	1	0	1
+1	1	1	1
+1	0	0	1
+假设如果 A = 60，且 B = 13，现在以二进制格式表示，它们如下所示：
+A = 0011 1100
+B = 0000 1101
+-----------------
+A&B = 0000 1100
+A|B = 0011 1101
+A^B = 0011 0001
+~A  = 1100 0011
+下表显示了 PostgreSQL 支持的位运算符。假设变量 A 的值为 60，变量 B 的值为 13，则：
+运算符	描述	实例
+&	按位与操作，按二进制位进行"与"运算。运算规则：	(A & B) 将得到 12，即为 0000 1100
+	0&0=0;
+	0&1=0;
+	1&0=0;
+	1&1=1;
+|	按位或运算符，按二进制位进行"或"运算。运算规则：	(A | B) 将得到 61，即为 0011 1101
+	0|0=0;
+	0|1=1;
+	1|0=1;
+	1|1=1;
+#	异或运算符，按二进制位进行"异或"运算。运算规则：	(A # B) 将得到 49，即为 0011 0001
+	0#0=0;
+	0#1=1;
+	1#0=1;
+	1#1=0;
+~	取反运算符，按二进制位进行"取反"运算。运算规则：	(~A ) 将得到 -61，即为 1100 0011，一个有符号二进制数的补码形式。
+	~1=0;
+	~0=1;
+<<	二进制左移运算符。将一个运算对象的各二进制位全部左移若干位（左边的二进制位丢弃，右边补0）。	A << 2 将得到 240，即为 1111 0000
+>>	二进制右移运算符。将一个数的各二进制位全部右移若干位，正数左补0，负数左补1，右边丢弃。	A >> 2 将得到 15，即为 0000 1111
+实例
+runoobdb=# select 60 | 13;
+ ?column?
+----------
+61
+(1 row)
+
+
+runoobdb=# select 60 & 13;
+ ?column?
+----------
+12
+(1 row)
+
+
+runoobdb=#  select  (~60);
+ ?column?
+----------
+-61
+(1 row)
+
+
+runoobdb=# select  (60 << 2);
+ ?column?
+----------
+240
+(1 row)
+
+
+runoobdb=# select  (60 >> 2);
+ ?column?
+----------
+15
+(1 row)
+
+
+runoobdb=#  select 60 # 13;
+ ?column?
+----------
+49
+(1 row)
