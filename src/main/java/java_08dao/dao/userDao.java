@@ -10,7 +10,7 @@ import java.sql.*;
  */
 public class userDao implements dao{
     static String url = "jdbc:postgresql://127.0.0.1:5432/java_note";
-    static String user = "shida";
+    static String user = "postgres";
     static String password = "1qaz!QAZ";
     static Connection conn;
     static ResultSet result;

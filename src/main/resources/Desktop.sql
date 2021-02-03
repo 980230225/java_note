@@ -910,3 +910,343 @@ runoobdb=#  select 60 # 13;
 ----------
 49
 (1 row)
+
+#查询语句
+PostgreSQL LIKE 子句
+在 PostgreSQL 数据库中，我们如果要获取包含某些字符的数据，可以使用 LIKE 子句。
+
+在 LIKE 子句中，通常与通配符结合使用，通配符表示任意字符，在 PostgreSQL 中，主要有以下两种通配符：
+
+百分号 %
+下划线 _
+如果没有使用以上两种通配符，LIKE 子句和等号 = 得到的结果是一样的。
+
+语法
+以下是使用 LIKE 子句搭配百分号 % 和下划线 _ 从数据库中获取数据的通用语法：
+
+SELECT FROM table_name WHERE column LIKE 'XXXX%';
+或者
+SELECT FROM table_name WHERE column LIKE '%XXXX%';
+或者
+SELECT FROM table_name WHERE column LIKE 'XXXX_';
+或者
+SELECT FROM table_name WHERE column LIKE '_XXXX';
+或者
+SELECT FROM table_name WHERE column LIKE '_XXXX_';
+你可以在 WHERE 子句中指定任何条件。
+
+你可以使用 AND 或者 OR 指定一个或多个条件。
+
+XXXX 可以是任何数字或者字符。
+
+实例
+下面是 LIKE 语句中演示了 % 和 _ 的一些差别:
+
+实例	描述
+WHERE SALARY::text LIKE '200%'	找出 SALARY 字段中以 200 开头的数据。
+WHERE SALARY::text LIKE '%200%'	找出 SALARY 字段中含有 200 字符的数据。
+WHERE SALARY::text LIKE '_00%'	找出 SALARY 字段中在第二和第三个位置上有 00 的数据。
+WHERE SALARY::text LIKE '2 % %'	找出 SALARY 字段中以 2 开头的字符长度大于 3 的数据。
+WHERE SALARY::text LIKE '%2'	找出 SALARY 字段中以 2 结尾的数据
+WHERE SALARY::text LIKE '_2%3'	找出 SALARY 字段中 2 在第二个位置上并且以 3 结尾的数据
+WHERE SALARY::text LIKE '2___3'	找出 SALARY 字段中以 2 开头，3 结尾并且是 5 位数的数据
+
+PostgreSQL LIMIT 子句
+PostgreSQL 中的 limit 子句用于限制 SELECT 语句中查询的数据的数量。
+
+语法
+带有 LIMIT 子句的 SELECT 语句的基本语法如下：
+
+SELECT column1, column2, columnN
+FROM table_name
+LIMIT [no of rows]
+下面是 LIMIT 子句与 OFFSET 子句一起使用时的语法：
+
+SELECT column1, column2, columnN
+FROM table_name
+LIMIT [no of rows] OFFSET [row num]
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+下面实例将找出限定的数量的数据，即读取 4 条数据：
+
+runoobdb=# SELECT * FROM COMPANY LIMIT 4;
+得到以下结果：
+
+ id | name  | age | address     | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+(4 rows)
+PostgreSQL ORDER BY 语句
+在 PostgreSQL 中，ORDER BY 用于对一列或者多列数据进行升序（ASC）或者降序（DESC）排列。
+
+语法
+ORDER BY 子句的基础语法如下：
+
+SELECT column-list
+FROM table_name
+[WHERE condition]
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+您可以在 ORDER BY 中使用一列或者多列，但是必须保证要排序的列必须存在。
+
+ASC 表示升序，DESC 表示降序。
+
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+下面实例将对结果根据 AGE 字段值进行升序排列：
+
+runoobdb=# SELECT * FROM COMPANY ORDER BY AGE ASC;
+得到以下结果：
+
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  3 | Teddy |  23 | Norway                                             |  20000
+  7 | James |  24 | Houston                                            |  10000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  2 | Allen |  25 | Texas                                              |  15000
+  5 | David |  27 | Texas                                              |  85000
+  1 | Paul  |  32 | California                                         |  20000
+(7 rows)
+下面实例将对结果根据 NAME 字段值和 SALARY 字段值进行升序排序：
+
+runoobdb=# SELECT * FROM COMPANY ORDER BY NAME, SALARY ASC;
+得到以下结果：
+
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  2 | Allen |  25 | Texas                                              |  15000
+  5 | David |  27 | Texas                                              |  85000
+  7 | James |  24 | Houston                                            |  10000
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  1 | Paul  |  32 | California                                         |  20000
+  3 | Teddy |  23 | Norway                                             |  20000
+(7 rows)
+下面实例将对结果根据NAME字段值进行降序排列：
+
+runoobdb=# SELECT * FROM COMPANY ORDER BY NAME DESC;
+得到以下结果：
+
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  3 | Teddy |  23 | Norway                                             |  20000
+  1 | Paul  |  32 | California                                         |  20000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  7 | James |  24 | Houston                                            |  10000
+  5 | David |  27 | Texas                                              |  85000
+  2 | Allen |  25 | Texas                                              |  15000
+(7 rows)
+PostgreSQL GROUP BY 语句
+在 PostgreSQL 中，GROUP BY 语句和 SELECT 语句一起使用，用来对相同的数据进行分组。
+
+GROUP BY 在一个 SELECT 语句中，放在 WHRER 子句的后面，ORDER BY 子句的前面。
+
+语法
+下面给出了 GROUP BY 子句的基本语法:
+SELECT column-list
+FROM table_name
+WHERE [ conditions ]
+GROUP BY column1, column2....columnN
+ORDER BY column1, column2....columnN
+GROUP BY 子句必须放在 WHERE 子句中的条件之后，必须放在 ORDER BY 子句之前。
+
+在 GROUP BY 子句中，你可以对一列或者多列进行分组，但是被分组的列必须存在于列清单中。
+
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+下面实例将根据 NAME 字段值进行分组，找出每个人的工资总额：
+
+runoobdb=# SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME;
+得到以下结果：
+
+  name  |  sum
+ -------+-------
+  Teddy | 20000
+  Paul  | 20000
+  Mark  | 65000
+  David | 85000
+  Allen | 15000
+  Kim   | 45000
+  James | 10000
+(7 rows)
+现在我们添加使用下面语句在 CAMPANY 表中添加三条记录：
+
+INSERT INTO COMPANY VALUES (8, 'Paul', 24, 'Houston', 20000.00);
+INSERT INTO COMPANY VALUES (9, 'James', 44, 'Norway', 5000.00);
+INSERT INTO COMPANY VALUES (10, 'James', 45, 'Texas', 5000.00);
+现在 COMPANY 表中存在重复的名称，数据如下：
+
+ id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+(10 rows)
+现在再根据 NAME 字段值进行分组，找出每个客户的工资总额：
+
+runoobdb=# SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME;
+这时的得到的结果如下：
+
+name  |  sum
+-------+-------
+ Allen | 15000
+ David | 85000
+ James | 20000
+ Kim   | 45000
+ Mark  | 65000
+ Paul  | 40000
+ Teddy | 20000
+(7 rows)
+下面实例将 ORDER BY 子句与 GROUP BY 子句一起使用：
+
+runoobdb=#  SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC;
+得到以下结果：
+
+name  |  sum
+-------+-------
+ Teddy | 20000
+ Paul  | 40000
+ Mark  | 65000
+ Kim   | 45000
+ James | 20000
+ David | 85000
+ Allen | 15000
+(7 rows)
+PostgreSQL HAVING 子句
+HAVING 子句可以让我们筛选分组后的各组数据。
+
+WHERE 子句在所选列上设置条件，而 HAVING 子句则在由 GROUP BY 子句创建的分组上设置条件。
+
+语法
+下面是 HAVING 子句在 SELECT 查询中的位置：
+
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+HAVING 子句必须放置于 GROUP BY 子句后面，ORDER BY 子句前面，下面是 HAVING 子句在 SELECT 语句中基础语法：
+
+SELECT column1, column2
+FROM table1, table2
+WHERE [ conditions ]
+GROUP BY column1, column2
+HAVING [ conditions ]
+ORDER BY column1, column2
+实例
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+下面实例将找出根据 NAME 字段值进行分组，并且 name(名称) 字段的计数少于 2 数据：
+
+SELECT NAME FROM COMPANY GROUP BY name HAVING count(name) < 2;
+得到以下结果：
+
+  name
+ -------
+  Teddy
+  Paul
+  Mark
+  David
+  Allen
+  Kim
+  James
+(7 rows)
+我们往表里添加几条数据：
+
+INSERT INTO COMPANY VALUES (8, 'Paul', 24, 'Houston', 20000.00);
+INSERT INTO COMPANY VALUES (9, 'James', 44, 'Norway', 5000.00);
+INSERT INTO COMPANY VALUES (10, 'James', 45, 'Texas', 5000.00);
+此时，COMPANY 表的记录如下：
+
+ id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+(10 rows)
+下面实例将找出根据 name 字段值进行分组，并且名称的计数大于 1 数据：
+
+runoobdb-# SELECT NAME FROM COMPANY GROUP BY name HAVING count(name) > 1;
+得到结果如下：
+
+ name
+-------
+ Paul
+ James
+(2 rows)
+在 PostgreSQL 中，DISTINCT 关键字与 SELECT 语句一起使用，用于去除重复记录，只获取唯一的记录。
+
+我们平时在操作数据时，有可能出现一种情况，在一个表中有多个重复的记录，当提取这样的记录时，DISTINCT 关键字就显得特别有意义，它只获取唯一一次记录，而不是获取重复记录。
+
+语法
+用于去除重复记录的 DISTINCT 关键字的基本语法如下：
+
+SELECT DISTINCT column1, column2,.....columnN
+FROM table_name
+WHERE [condition]
