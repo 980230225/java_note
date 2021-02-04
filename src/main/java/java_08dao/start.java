@@ -18,14 +18,14 @@ public class start {
     public static void main(String[] args) throws SQLException {
         userDao user=new userDao();
         String sql;
-//        for (int i=1;i<301;i++) {
-//
-//            sql="insert into test(uid,uname) values(" + i + ",'shida');";
-//            user.insert(sql);
-//
-//            System.out.println(sql);
-//            System.out.println("第"+i+"次执行成功");
-//        }
+        for (int i=1;i<301;i++) {
+
+            sql="insert into test(uid,uname) values(" + i + ",'shida');";
+            user.insert(sql);
+
+            System.out.println(sql);
+            System.out.println("第"+i+"次执行成功");
+        }
 
 //        userDao deletedao=new userDao();
 //        for (int i=0;i<=300;i++){

@@ -1250,3 +1250,15 @@ runoobdb-# SELECT NAME FROM COMPANY GROUP BY name HAVING count(name) > 1;
 SELECT DISTINCT column1, column2,.....columnN
 FROM table_name
 WHERE [condition]
+
+#例子
+WITH delete_with as(
+DELETE FROM TEST where uid BETWEEN 1 and 300 RETURNING *
+)
+SELECT * from delete_with;
+with update_with as(
+update test set uname='shida3' where uname='shida2' and uid BETWEEN  101and 200 returning *
+)
+select *FROM update_with;
+select * from test;
+
